@@ -39,6 +39,9 @@
     <ClCompile Include="globals.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="model.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h">

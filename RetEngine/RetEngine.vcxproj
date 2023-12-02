@@ -152,6 +152,7 @@
     <ClCompile Include="globals.h" />
     <ClCompile Include="input.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="model.c" />
     <ClCompile Include="render.c" />
     <ClCompile Include="shader.c" />
   </ItemGroup>

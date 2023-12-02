@@ -92,11 +92,6 @@ void renderSetup() {
 }
 
 void renderScene() {
-    //for (int i = 0; i < sizeof(textures) / sizeof(textures[0]); i++) {
-    //    char textureName[16];
-    //    sprintf(textureName, "texture%d", i);
-    //    activateTexture(textures[i], i);
-    //}
     setFloat(program, "mixValue", 0.2f);
 
     mat4 projection = GLM_MAT4_IDENTITY_INIT;
@@ -114,6 +109,14 @@ void renderScene() {
 
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
+}
+
+unsigned int newVAO() {
+	unsigned int vertexArrayObject;
+	glGenVertexArrays(1, &vertexArrayObject);
+	glBindVertexArray(vertexArrayObject);
+
+	return vertexArrayObject;
 }
 
 unsigned int gl_alloc(float vertices[], int verticesSize, int sizes[], int sizesLen, int stride) {
