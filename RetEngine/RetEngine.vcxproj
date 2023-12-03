@@ -160,6 +160,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="shader.h" />
   </ItemGroup>

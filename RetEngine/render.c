@@ -4,6 +4,7 @@
 #include "stb/stb_image.h"
 #include "render.h"
 #include "camera.h"
+#include "model.h"
 
 float vertices[] = {
 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -101,13 +102,15 @@ void renderScene() {
     int modelLoc = glGetUniformLocation(program, "model");
 
     for (int i = 0; i < 10; i++) {
-        mat4 model = GLM_MAT4_IDENTITY_INIT;
-        glm_translate(model, cubePositions[i]);
-        float angle = (i % 3 == 0) ? 0.0f : 20.0f * i;
-        glm_rotate(model, (float)SDL_GetTicks() / 1000 * glm_rad(angle), (vec3) { 1.0f, 0.3f, 0.5f });
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model);
+        Model cube = {
+			.vertexCount = 36,
+			.rotationAxis = { 1.0f, 0.3f, 0.5f },
+			.rotationAngle = (float)SDL_GetTicks() / 50 * glm_rad(20.0f * i),
+			.scale = { 1.0f, 1.0f, 1.0f }
+		};
+		glm_vec3_copy(cubePositions[i], cube.position);
 
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+		drawModel(cube, program, currentVAO);
     }
 }
 
