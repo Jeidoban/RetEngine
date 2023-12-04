@@ -63,43 +63,60 @@ vec3 cubePositions[] = {
     { -1.3f,  1.0f, -1.5f }
 };
 
-unsigned int program;
-unsigned int currentVAO;
-unsigned int textures[2];
+unsigned int shaders[] = { 0, 0 };
+VertexAttributeObjects vaos;
+unsigned int textures[] = { 0, 0 };
+unsigned int wallVao;
 
-unsigned int getCurrentShader() {
-    return program;
+void drawWalls(); // Delete this, it's just for testing
+
+unsigned int* getShaders() {
+    return shaders;
 }
 
 void renderSetup() {
-    char* shaderPaths[] = { "vertex.glsl", "fragment.glsl" };
     unsigned int shaderTypes[] = { GL_VERTEX_SHADER, GL_FRAGMENT_SHADER };
-    program = compileShaderProgram(shaderPaths, shaderTypes, 2);
 
-    currentVAO = gl_alloc(vertices, sizeof(vertices), (int[2]){ 3, 2 }, 2, 5);
+    char* shaderPathsDefault[] = { "defaultVertex.glsl", "defaultFragment.glsl" };
+    shaders[SHADER_DEFAULT] = compileShaderProgram(shaderPathsDefault, shaderTypes, 2);
+
+    char* shaderPathsLighting[] = { "defaultVertex.glsl", "lightingFragment.glsl" };
+    shaders[SHADER_LIGHTING] = compileShaderProgram(shaderPathsLighting, shaderTypes, 2);
+
+    vaos.cube = gl_alloc(vertices, sizeof(vertices), (int[2]){ 3, 2 }, 2, 5);
+    vaos.cubelight = gl_alloc(vertices, sizeof(vertices), (int[2]) { 3, 2 }, 2, 5);
+
     textures[0] = loadTexture("assets\\container.jpg");
     textures[1] = loadTexture("assets\\awesomeface.png");
 
-    useShader(program);
-    glBindVertexArray(currentVAO);
     for (int i = 0; i < sizeof(textures) / sizeof(textures[0]); i++) {
         char textureName[16];
         sprintf(textureName, "texture%d", i);
-        setInt(program, textureName, i);
+        setInt(shaders[SHADER_DEFAULT], textureName, i);
         activateTexture(textures[i], i);
     }
+
+    setFloat(shaders[SHADER_DEFAULT], "mixValue", 0.2f);
+    
+    //// Delete this, it's just for testing
+    //float wallver[] = {
+    //    -5.0f,  5.0f, 0.0f,  0.0f, 1.0f,
+    //     5.0f,  5.0f, 0.0f,  1.0f, 1.0f,
+    //     5.0f, -5.0f, 0.0f,  1.0f, 0.0f,
+    //     5.0f, -5.0f, 0.0f,  1.0f, 0.0f,
+    //    -5.0f, -5.0f, 0.0f,  0.0f, 0.0f,
+    //    -5.0f,  5.0f, 0.0f,  0.0f, 1.0f
+    //};
+
+    //// Delete this, it's just for testing
+    //wallVao = gl_alloc(wallver, sizeof(wallver), (int[2]){ 3, 2 }, 2, 5);
 
     updateCamera();
 }
 
 void renderScene() {
-    setFloat(program, "mixValue", 0.2f);
-
-    mat4 projection = GLM_MAT4_IDENTITY_INIT;
-    glm_perspective(glm_rad(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f, projection);
-    setMat4(program, "projection", projection);
-
-    int modelLoc = glGetUniformLocation(program, "model");
+    setVec3(shaders[SHADER_DEFAULT], "objectColor", (vec3){ 1.0f, 0.5f, 0.31f });
+    setVec3(shaders[SHADER_DEFAULT], "lightColor", (vec3){ 1.0f, 1.0f, 1.0f });
 
     for (int i = 0; i < 10; i++) {
         Model cube = {
@@ -110,9 +127,76 @@ void renderScene() {
 		};
 		glm_vec3_copy(cubePositions[i], cube.position);
 
-		drawModel(cube, program, currentVAO);
+		drawModel(cube, shaders[SHADER_DEFAULT], vaos.cube);
     }
+
+    drawModel((Model){
+		.vertexCount = 36,
+		.position = { 1.2f, 1.0f, 2.0f },
+		.rotationAxis = { 0.0f, 0.0f, 0.0f },
+		.rotationAngle = 0.0f,
+		.scale = { 0.2f, 0.2f, 0.2f }
+	}, shaders[SHADER_LIGHTING], vaos.cube);
+
+    //drawWalls();
 }
+
+// Delete this, it's just for testing
+//void drawWalls() {
+//    Model wall = {
+//    .vertexCount = 6,
+//    .position = { 0.0f, 0.0f, -5.0f },
+//    .rotationAxis = { 0.0f, 0.0f, 0.0f },
+//    .rotationAngle = 0.0f,
+//    .scale = { 1.0f, 1.0f, 1.0f }
+//    };
+//    drawModel(wall, program, wallVao);
+//
+//    Model wall2 = {
+//       .vertexCount = 6,
+//       .position = { 0.0f, 0.0f, 5.0f },
+//       .rotationAxis = { 0.0f, 0.0f, 0.0f },
+//       .rotationAngle = 0.0f,
+//       .scale = { 1.0f, 1.0f, 1.0f }
+//    };
+//    drawModel(wall2, program, wallVao);
+//
+//    Model wall3 = {
+//       .vertexCount = 6,
+//       .position = { -5.0f, 0.0f, 0.0f },
+//       .rotationAxis = { 0.0f, 1.0f, 0.0f },
+//       .rotationAngle = 90.0f,
+//       .scale = { 1.0f, 1.0f, 1.0f }
+//    };
+//    drawModel(wall3, program, wallVao);
+//
+//    Model wall4 = {
+//       .vertexCount = 6,
+//       .position = { 5.0f, 0.0f, 0.0f },
+//       .rotationAxis = { 0.0f, 1.0f, 0.0f },
+//       .rotationAngle = 90.0f,
+//       .scale = { 1.0f, 1.0f, 1.0f }
+//    };
+//    drawModel(wall4, program, wallVao);
+//
+//    Model wall5 = {
+//       .vertexCount = 6,
+//       .position = { 0.0f, -5.0f, 0.0f },
+//       .rotationAxis = { 1.0f, 0.0f, 0.0f },
+//       .rotationAngle = 90.0f,
+//       .scale = { 1.0f, 1.0f, 1.0f }
+//    };
+//    drawModel(wall5, program, wallVao);
+//
+//    Model wall6 = {
+//       .vertexCount = 6,
+//       .position = { 0.0f, 5.0f, 0.0f },
+//       .rotationAxis = { 1.0f, 0.0f, 0.0f },
+//       .rotationAngle = 90.0f,
+//       .scale = { 1.0f, 1.0f, 1.0f }
+//    };
+//    drawModel(wall6, program, wallVao);
+//}
 
 unsigned int newVAO() {
 	unsigned int vertexArrayObject;

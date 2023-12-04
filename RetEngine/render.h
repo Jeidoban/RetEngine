@@ -1,6 +1,15 @@
 #pragma once
 
-unsigned int getCurrentShader();
+#define SHADER_DEFAULT 0
+#define SHADER_LIGHTING 1
+#define NUM_SHADERS 2
+
+typedef struct {
+	unsigned int cube;
+	unsigned int cubelight;
+} VertexAttributeObjects;
+
+unsigned int* getShaders();
 void renderSetup();
 void renderScene();
 unsigned int newVAO();

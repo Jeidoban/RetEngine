@@ -76,17 +76,26 @@ void useShader(unsigned int shaderProgram) {
 }
 
 void setBool(unsigned int shaderProgram, const char* name, bool value) {
+    useShader(shaderProgram);
 	glUniform1i(glGetUniformLocation(shaderProgram, name), (int)value);
 }
 
 void setInt(unsigned int shaderProgram, const char* name, int value) {
+    useShader(shaderProgram);
 	glUniform1i(glGetUniformLocation(shaderProgram, name), value);
 }
 
 void setFloat(unsigned int shaderProgram, const char* name, float value) {
+	useShader(shaderProgram);
 	glUniform1f(glGetUniformLocation(shaderProgram, name), value);
 }
 
 void setMat4(unsigned int shaderProgram, const char* name, mat4 value) {
+    useShader(shaderProgram);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name), 1, GL_FALSE, value);
+}
+
+void setVec3(unsigned int shaderProgram, const char* name, vec3 value) {
+    useShader(shaderProgram);
+	glUniform3fv(glGetUniformLocation(shaderProgram, name), 1, value);
 }

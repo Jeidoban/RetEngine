@@ -4,7 +4,7 @@
 #include "camera.h"
 #include "globals.h"
 
-vec3 cameraPos = { 0.0f, 0.0f, 3.0f };
+vec3 cameraPos = { 0.0f, -3.0f, 3.0f };
 vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
 
 void setCameraPosition(vec3 newPosition) {
@@ -37,5 +37,12 @@ void updateCamera() {
 	glm_vec3_add(cameraPos, cameraFront, cameraTarget);
 	mat4 view = GLM_MAT4_IDENTITY_INIT;
 	glm_lookat(cameraPos, cameraTarget, cameraUp, view);
-	setMat4(getCurrentShader(), "view", view);
+
+	mat4 projection = GLM_MAT4_IDENTITY_INIT;
+	glm_perspective(glm_rad(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f, projection);
+	
+	for (int i = 0; i < sizeof(shaders) / shaders[0]; i++) {
+		setMat4(shaders[i], "view", view);
+		setMat4(shaders[i], "projection", projection);
+	}
 }
