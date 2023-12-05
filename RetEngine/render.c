@@ -6,48 +6,92 @@
 #include "camera.h"
 #include "model.h"
 
+//float vertices[] = {
+//-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+// 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+// 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+// 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+//-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+//
+//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+// 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+// 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+// 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+//-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//
+//-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//
+// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+// 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+// 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+// 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+// 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//
+//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+// 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+// 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+// 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//
+//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+// 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+//};
+
 float vertices[] = {
--0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
- 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
- 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
- 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
--0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
--0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
--0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
- 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
- 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
- 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
--0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
--0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
--0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
--0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
--0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
--0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
--0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
--0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
- 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
- 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
- 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
- 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
- 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
- 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
--0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
- 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
- 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
- 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
--0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
--0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
--0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
- 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
- 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
- 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
--0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
--0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
 
 vec3 cubePositions[] = {
@@ -83,8 +127,8 @@ void renderSetup() {
     char* shaderPathsLighting[] = { "defaultVertex.glsl", "lightingFragment.glsl" };
     shaders[SHADER_LIGHTING] = compileShaderProgram(shaderPathsLighting, shaderTypes, 2);
 
-    vaos.cube = gl_alloc(vertices, sizeof(vertices), (int[2]){ 3, 2 }, 2, 5);
-    vaos.cubelight = gl_alloc(vertices, sizeof(vertices), (int[2]) { 3, 2 }, 2, 5);
+    vaos.cube = gl_alloc(vertices, sizeof(vertices), (int[2]){ 3, 3 }, 2, 6);
+    vaos.cubelight = gl_alloc(vertices, sizeof(vertices), (int[2]) { 3, 3 }, 2, 6);
 
     textures[0] = loadTexture("assets\\container.jpg");
     textures[1] = loadTexture("assets\\awesomeface.png");
@@ -97,6 +141,7 @@ void renderSetup() {
     }
 
     setFloat(shaders[SHADER_DEFAULT], "mixValue", 0.2f);
+    setVec3(shaders[SHADER_DEFAULT], "lightPos", (vec3){ 1.2f, 1.0f, 2.0f });
     
     //// Delete this, it's just for testing
     //float wallver[] = {
@@ -117,6 +162,9 @@ void renderSetup() {
 void renderScene() {
     setVec3(shaders[SHADER_DEFAULT], "objectColor", (vec3){ 1.0f, 0.5f, 0.31f });
     setVec3(shaders[SHADER_DEFAULT], "lightColor", (vec3){ 1.0f, 1.0f, 1.0f });
+    vec3 cameraPos;
+    getCameraPosition(cameraPos);
+    setVec3(shaders[SHADER_DEFAULT], "viewPos", cameraPos);
 
     for (int i = 0; i < 10; i++) {
         Model cube = {
@@ -136,7 +184,7 @@ void renderScene() {
 		.rotationAxis = { 0.0f, 0.0f, 0.0f },
 		.rotationAngle = 0.0f,
 		.scale = { 0.2f, 0.2f, 0.2f }
-	}, shaders[SHADER_LIGHTING], vaos.cube);
+	}, shaders[SHADER_LIGHTING], vaos.cubelight);
 
     //drawWalls();
 }
