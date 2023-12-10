@@ -160,11 +160,20 @@ void renderSetup() {
 }
 
 void renderScene() {
-    setVec3(shaders[SHADER_DEFAULT], "objectColor", (vec3){ 1.0f, 0.5f, 0.31f });
     setVec3(shaders[SHADER_DEFAULT], "lightColor", (vec3){ 1.0f, 1.0f, 1.0f });
     vec3 cameraPos;
     getCameraPosition(cameraPos);
     setVec3(shaders[SHADER_DEFAULT], "viewPos", cameraPos);
+
+    setVec3(shaders[SHADER_DEFAULT], "material.ambient", (vec3) { 1.0f, 0.5f, 0.31f });
+    setVec3(shaders[SHADER_DEFAULT], "material.diffuse", (vec3) { 1.0f, 0.5f, 0.31f });
+    setVec3(shaders[SHADER_DEFAULT], "material.specular", (vec3) { 0.5f, 0.5f, 0.5f });
+    setFloat(shaders[SHADER_DEFAULT], "material.shininess", 32.0f);
+
+    setVec3(shaders[SHADER_DEFAULT], "light.ambient", (vec3) { 0.2f, 0.2f, 0.2f });
+    setVec3(shaders[SHADER_DEFAULT], "light.diffuse", (vec3) { 0.5f, 0.5f, 0.5f });
+    setVec3(shaders[SHADER_DEFAULT], "light.specular", (vec3) { 1.0f, 1.0f, 1.0f });
+
 
     for (int i = 0; i < 10; i++) {
         Model cube = {
