@@ -141,7 +141,7 @@ void renderSetup() {
     }
 
     setFloat(shaders[SHADER_DEFAULT], "mixValue", 0.2f);
-    setVec3(shaders[SHADER_DEFAULT], "lightPos", (vec3){ 1.2f, 1.0f, 2.0f });
+
     
     //// Delete this, it's just for testing
     //float wallver[] = {
@@ -159,13 +159,18 @@ void renderSetup() {
     updateCamera();
 }
 
+vec3 lightPos = { 1.2f, 1.0f, 2.0f };
 void renderScene() {
+    lightPos[0] = sin((float)SDL_GetTicks() / 1000) * 5;
+    lightPos[2] = cos((float)SDL_GetTicks() / 1000) * 5;
+
+    setVec3(shaders[SHADER_DEFAULT], "lightPos", lightPos);
     setVec3(shaders[SHADER_DEFAULT], "lightColor", (vec3){ 1.0f, 1.0f, 1.0f });
     vec3 cameraPos;
     getCameraPosition(cameraPos);
     setVec3(shaders[SHADER_DEFAULT], "viewPos", cameraPos);
 
-    setVec3(shaders[SHADER_DEFAULT], "material.ambient", (vec3) { 1.0f, 0.5f, 0.31f });
+    setVec3(shaders[SHADER_DEFAULT], "material.ambient", (vec3) { 1.0f / 8, 0.5f / 8, 0.31f / 8});
     setVec3(shaders[SHADER_DEFAULT], "material.diffuse", (vec3) { 1.0f, 0.5f, 0.31f });
     setVec3(shaders[SHADER_DEFAULT], "material.specular", (vec3) { 0.5f, 0.5f, 0.5f });
     setFloat(shaders[SHADER_DEFAULT], "material.shininess", 32.0f);
@@ -189,7 +194,7 @@ void renderScene() {
 
     drawModel((Model){
 		.vertexCount = 36,
-		.position = { 1.2f, 1.0f, 2.0f },
+		.position = { lightPos[0], lightPos[1], lightPos[2]},
 		.rotationAxis = { 0.0f, 0.0f, 0.0f },
 		.rotationAngle = 0.0f,
 		.scale = { 0.2f, 0.2f, 0.2f }
@@ -363,7 +368,7 @@ void activateTexture(unsigned int textureID, int textureUnit) {
 }
 
 void clearScreen() {
-    glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
