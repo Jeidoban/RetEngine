@@ -152,6 +152,7 @@
     <ClCompile Include="globals.h" />
     <ClCompile Include="input.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="model.c" />
     <ClCompile Include="render.c" />
     <ClCompile Include="shader.c" />
   </ItemGroup>
@@ -159,12 +160,14 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.glsl" />
-    <None Include="vertex.glsl" />
+    <None Include="defaultFragment.glsl" />
+    <None Include="defaultVertex.glsl" />
+    <None Include="lightingFragment.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

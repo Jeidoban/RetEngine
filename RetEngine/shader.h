@@ -8,3 +8,4 @@ void setBool(unsigned int shaderProgram, const char* name, bool value);
 void setInt(unsigned int shaderProgram, const char* name, int value);
 void setFloat(unsigned int shaderProgram, const char* name, float value);
 void setMat4(unsigned int shaderProgram, const char* name, mat4 value);
+void setVec3(unsigned int shaderProgram, const char* name, vec3 value);

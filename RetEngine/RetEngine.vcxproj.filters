@@ -39,6 +39,9 @@
     <ClCompile Include="globals.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="model.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h">
@@ -56,12 +59,18 @@
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.glsl">
+    <None Include="defaultFragment.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="vertex.glsl">
+    <None Include="defaultVertex.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="lightingFragment.glsl">
       <Filter>Shader Files</Filter>
     </None>
   </ItemGroup>
